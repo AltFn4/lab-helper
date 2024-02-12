@@ -1,4 +1,5 @@
 <x-app-layout>
+    @include('labs.partials.stage', ['stage' => 'seat'])
     <div class="p-5 flex flex-col items-center">
         <h1 class="text-white text-5xl">Select Seat</h1>
         <form action="{{route('select.seat')}}" method="post">

@@ -24,14 +24,6 @@ Route::get('/dashboard', function (Request $request) {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::patch('/dashboard', function (Request $request) {
-    $user = $request->user();
-    $seat = $user->seat;
-    $seat->user_id = NULL;
-    $seat->update();
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('leave');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -39,9 +31,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/select', [LabController::class, 'index'])->name('select');
-    Route::post('/select', [LabController::class, 'show'])->name('select.lab');
-    Route::patch('/select', [SeatController::class, 'update'])->name('select.seat');
+    Route::get('/labs', [LabController::class, 'index'])->name('labs.index');
+    Route::post('/labs', [LabController::class, 'show'])->name('select.lab');
+    Route::patch('/labs', [SeatController::class, 'update'])->name('select.seat');
+    Route::delete('/labs', [SeatController::class, 'destroy'])->name('labs.leave');
 });
 
 Route::middleware('auth')->group(function () {

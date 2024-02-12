@@ -13,7 +13,7 @@ class LabController extends Controller
      */
     public function index()
     {
-        return view('select.lab', ['labs' => Lab::all()]);
+        return view('labs.lab', ['labs' => Lab::all()->sortBy('name')]);
     }
 
     /**
@@ -44,8 +44,12 @@ class LabController extends Controller
         $lab = Lab::find($id);
         $user = $request->user();
 
+        if ($lab == NULL) {
+            return back()->with('message', 'Inavlid lab selection.');;
+        }
+
         if ($user->role == 'student') {
-            return view('select.seat', ['lab' => $lab]);
+            return view('labs.seat', ['lab' => $lab]);
         }
 
         $submissions = Submission::all()->filter(function($submission) use ($id) {

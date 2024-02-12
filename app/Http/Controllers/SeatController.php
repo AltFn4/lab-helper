@@ -71,17 +71,24 @@ class SeatController extends Controller
         {
             $seat->user_id = $user->id;
             $seat->update();
-            return view('dashboard');
+            return redirect()->route('dashboard');
         }
 
-        return back()->with('message', 'Seat is not available!');
+        return redirect()->back()->with('message', 'Seat is not available!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $seat = $request->user()->seat;
+        if ($seat != NULL)
+        {
+            $seat->user_id = NULL;
+            $seat->update();
+        }
+
+        return redirect()->back();
     }
 }
