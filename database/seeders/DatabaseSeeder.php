@@ -6,7 +6,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Lab;
 use App\Models\Seat;
-use App\Models\Submission;
 
 class DatabaseSeeder extends Seeder
 {
@@ -43,11 +42,5 @@ class DatabaseSeeder extends Seeder
         $seat = Seat::find(1);
         $seat->user_id = 1;
         $seat->update();
-
-        Submission::factory(10)->create();
-        Submission::factory()->create([
-            'user_id' => 11,
-            'code' => 'print("Hello World!")',
-        ]);
     }
 }

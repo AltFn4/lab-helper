@@ -48,7 +48,7 @@
                     <p class="text-gray-100 text-lg">
                         Get help
                     </p>
-                    <form action="{{ route('request.edit') }}" method="GET">
+                    <form action="{{ route('inquiry.edit') }}" method="GET">
                         @csrf
                         @method('GET')
                         <x-primary-button>

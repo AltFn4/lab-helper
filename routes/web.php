@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LabController;
 use App\Http\Controllers\SeatController;
-use App\Http\Controllers\RequestController;
+use App\Http\Controllers\InquiryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,14 +43,9 @@ Route::get('/request', function (Request $request) {
 })->middleware(['auth', 'verified'])->name('request.edit');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/request', [RequestController::class, 'index'])->name('request.edit');
-    Route::post('/request', [RequestController::class, 'create'])->name('request.create');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::get('/review', function (Request $request) {
-        return view('review.show', ['submission' => \App\Models\Submission::find(1)]);
-    })->name('review');
+    Route::get('/inquiries', [InquiryController::class, 'index'])->name('inquiry.index');
+    Route::get('/inquiry', [InquiryController::class, 'edit'])->name('inquiry.edit');
+    Route::post('/inquiry', [InquiryController::class, 'create'])->name('inquiry.create');
 });
 
 require __DIR__.'/auth.php';

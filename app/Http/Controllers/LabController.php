@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Lab;
-use App\Models\Submission;
 
 class LabController extends Controller
 {
@@ -52,11 +51,7 @@ class LabController extends Controller
             return view('labs.seat', ['lab' => $lab]);
         }
 
-        $submissions = Submission::all()->filter(function($submission) use ($id) {
-            return $submission->user->seat !== NULL && $submission->user->seat->lab_id == $id;
-        });
-
-        return view('review.index', ['submissions' => $submissions]);
+        return view('review.index');
         
     }
 
