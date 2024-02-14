@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LabController;
 use App\Http\Controllers\SeatController;
+use App\Http\Controllers\RequestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,10 +38,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/labs', [SeatController::class, 'destroy'])->name('labs.leave');
 });
 
+Route::get('/request', function (Request $request) {
+    return view('request.edit');
+})->middleware(['auth', 'verified'])->name('request.edit');
+
 Route::middleware('auth')->group(function () {
-    Route::get('/request', function () {
-        return view('request.upload');
-    })->name('request.upload');
+    Route::get('/request', [RequestController::class, 'index'])->name('request.edit');
+    Route::post('/request', [RequestController::class, 'create'])->name('request.create');
 });
 
 Route::middleware('auth')->group(function () {

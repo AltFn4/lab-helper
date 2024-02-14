@@ -44,11 +44,19 @@
                     
                     @endif
                 </div>
-                <div class="bg-gray-500 rounded">
+                <div class="p-4 flex flex-col gap-3 bg-gray-500 rounded ">
                     <p class="text-gray-100 text-lg">
-                        Request Assistance
+                        Get help
                     </p>
+                    <form action="{{ route('request.edit') }}" method="GET">
+                        @csrf
+                        @method('GET')
+                        <x-primary-button>
+                            request
+                        </x-primary-button>
+                </form>
                 </div>
+                
             </div>
     </div>
 </x-app-layout>
