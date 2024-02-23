@@ -7,15 +7,27 @@ use App\Models\Inquiry;
 
 class InquiryController extends Controller
 {    
-    public function index()
+    public function index(Request $request)
     {
-        return view('inquiry.index', ['inquiries' => Inquiry::all()->sortBy('created_at')]);
+        $request->validate([
+            'lab_id' => 'required'
+        ]);
+        $lab_id = $request->lab_id;
+        $inquiries = Inquiry::all()->filter(function (Inquiry $in) use ($lab_id) {
+            return $in->user->seat->lab->id == $lab_id;
+        })->sortBy('created_at');
+        return view('inquiry.index', ['inquiries' => $inquiries]);
     }
 
-    public function edit(Request $request)
+    public function edit()
+    {
+        return view('inquiry.edit');
+    }
+
+    public function show(Request $request)
     {
         $inquiry = Inquiry::find($request->inquiry_id);
-        return view('inquiry.edit', ['inquiry' => $inquiry]);
+        return view('inquiry.show', ['inquiry' => $inquiry]);
     }
 
     public function create(Request $request)
@@ -23,15 +35,22 @@ class InquiryController extends Controller
         $request->validate([
             'type' => 'required',
         ]);
+        
+        // Cancel inquiry creation if there exists one for the same user or user has not picked a seat.
+        if ($request->user()->inquiry || $request->user()->seat == NULL)
+        {
+            return back();
+        }
 
         $inquiry = Inquiry::create([
             'code' => $request->code,
             'type' => $request->type,
             'desc' => $request->desc,
             'user_id' => $request->user()->id,
-        ])->save();
+        ]);
+        $inquiry->save();
 
-        return back();
+        return view('inquiry.show', ['inquiry' => $inquiry]);
     }
 
     public function destroy(Request $request)
@@ -42,9 +61,9 @@ class InquiryController extends Controller
 
         $inquiry = Inquiry::find($request->inquiry_id);
         if ($inquiry != NULL) {
-            $inquiry->destroy();
+            $inquiry->delete();
         }
 
-        return back();
+        return view('dashboard');
     }
 }

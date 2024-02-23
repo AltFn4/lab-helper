@@ -44,7 +44,9 @@
                     
                     @endif
                 </div>
+                @if(Auth::user()->seat != NULL)
                 <div class="p-4 flex flex-col gap-3 bg-gray-500 rounded ">
+                    @if(Auth::user()->inquiry == NULL)
                     <p class="text-gray-100 text-lg">
                         Get help
                     </p>
@@ -54,9 +56,23 @@
                         <x-primary-button>
                             request
                         </x-primary-button>
-                </form>
+                    </form>
+                    @else
+                    <p class="text-gray-100 text-lg">
+                        Your request
+                    </p>
+                    <p>Time elapsed: {{ Auth::user()->inquiry->created_at->diffInMinutes(Carbon\Carbon::now()) }} mins</p>
+                    <form action="{{ route('inquiry.show') }}" method="GET">
+                        @csrf
+                        @method('GET')
+                        <input type="hidden" name="inquiry_id" value="{{ Auth::user()->inquiry->id }}">
+                        <x-primary-button>
+                            inspect
+                        </x-primary-button>
+                    </form>
+                    @endif
                 </div>
-                
+                @endif
             </div>
     </div>
 </x-app-layout>

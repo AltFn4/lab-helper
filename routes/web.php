@@ -45,7 +45,9 @@ Route::get('/request', function (Request $request) {
 Route::middleware('auth')->group(function () {
     Route::get('/inquiries', [InquiryController::class, 'index'])->name('inquiry.index');
     Route::get('/inquiry', [InquiryController::class, 'edit'])->name('inquiry.edit');
+    Route::get('/live', [InquiryController::class, 'show'])->name('inquiry.show');
     Route::post('/inquiry', [InquiryController::class, 'create'])->name('inquiry.create');
+    Route::delete('/live', [InquiryController::class, 'destroy'])->name('inquiry.destroy');
 });
 
 require __DIR__.'/auth.php';

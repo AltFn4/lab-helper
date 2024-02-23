@@ -85,6 +85,11 @@ class SeatController extends Controller
         $seat = $request->user()->seat;
         if ($seat != NULL)
         {
+            $inquiry = $request->user()->inquiry;
+            if ($inquiry != NULL)
+            {
+                $inquiry->delete();
+            }
             $seat->user_id = NULL;
             $seat->update();
         }

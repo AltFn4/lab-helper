@@ -7,24 +7,18 @@
             <div class="flex flex-col gap-2">
                 <h2 class="text-xl">Code</h2>
                 <div class="border-2 border-gray-500 rounded">
-                    <textarea name="code" id="codeTextarea">{{ isset($inquiry) ? $inquiry->code : '' }}</textarea>
+                    <textarea name="code" id="codeTextarea"></textarea>
                 </div>
             </div>
             <div class="flex flex-col gap-2">
                 <h2 class="text-xl">Details</h2>
                 <div class="flex flex-col gap-2">
                     <label for="request-type">Type</label>
-                    @if(Auth::user()->role == 'student')
                     <select name="type" id="request-type" class="bg-gray-800 rounded" required>
                         <option value=""></option>
                         <option value="signoff">Sign off</option>
                         <option value="ask">Ask question</option>
                     </select>
-                    @else
-                    @isset($inquiry)
-                    <p>{{ $inquiry->type }}</p>
-                    @endisset
-                    @endif
                 </div>
                 <div class="flex flex-col gap-2">
                     <label for="request-desc">Description</label>

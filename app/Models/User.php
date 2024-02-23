@@ -48,8 +48,8 @@ class User extends Authenticatable
         return $this->hasOne(Seat::class);
     }
 
-    public function inquiries ()
+    public function inquiry ()
     {
-        return $this->hasMany(Inquiry::class);
+        return $this->hasOne(Inquiry::class);
     }
 }
