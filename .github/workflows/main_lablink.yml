@@ -76,6 +76,9 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
+
+      - name: npm build
+        run: npm run build --if-present
       
       - name: Login to Azure
         uses: azure/login@v1
