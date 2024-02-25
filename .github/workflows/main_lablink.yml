@@ -45,7 +45,7 @@ jobs:
 
       - name: Install Breeze
         run: |
-          php artisan breeze:install blade --dark --ansi
+          php artisan breeze:install blade --dark --no-interaction
           php artisan migrate:fresh --seed
 
       - name: npm install, build, and test
