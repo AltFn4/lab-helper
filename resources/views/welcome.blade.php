@@ -13,9 +13,9 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="antialiased bg-gray-800">
+    <body class="antialiased bg-gradient-to-r from-sky-500 to-indigo-500">
         <div class="px-5 w-screen h-screen relative">
-            <div class="absolute inset-x-0 top-0 z-10 w-screen">
+            <div class="top-0 z-10 w-screen">
                 <div class="grid grid-cols-2 justify-between">
                     <h2 class="p-5 text-gray-300 text-xl">
                         LabLink
@@ -26,20 +26,31 @@
                 </div>
                 <hr>
             </div>
-            <div class="absolute inset-0 z-0 bg-gradient-to-r from-sky-500 to-indigo-500 w-screen"></div>
-            <div class="flex flex-col gap-5 absolute inset-y-1/2 z-10 w-screen">
-                <p class="text-center">
-                    <a class="text-3xl">
-                        Connect with your lab with
-                    </a>
-                    <br>
-                    <a class="text-3xl text-gray-300">
-                        LabLink
-                    <a>
-                    <br>
-                    your trusted partner in productivity!
-                </p>
-            </div>
+            <article class="snap-y">
+                <section class="flex flex-col gap-5 z-10 w-screen">
+                    <p class="text-center">
+                        <a class="text-3xl">
+                            Connect with your lab with
+                        </a>
+                        <br>
+                        <a class="text-3xl text-gray-300">
+                            LabLink
+                        <a>
+                        <br>
+                        your trusted partner in productivity!
+                    </p>
+                </section>
+                <section class="flex flex-col gap-5">
+                    <p class="text-center">
+                        Sign off or Ask question with fast response time!
+                    </p>
+                </section>
+                <section class="flex flex-col gap-5">
+                    <p class="text-center">
+                        Provides you the better lab experience!
+                    </p>
+                </section>
+            </article>
         </div>
     </body>
 </html>
