@@ -30,6 +30,9 @@ export default {
                     '100%': { backgroundColor: theme('colors.black')},
                 },
             }),
+            height: {
+                '128': '32rem',
+            },
         },
     },
 

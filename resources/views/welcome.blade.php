@@ -26,8 +26,8 @@
                 </div>
                 <hr>
             </div>
-            <article class="snap-y">
-                <section class="flex flex-col gap-5 z-10 w-screen">
+            <article class="snap-y snap-mandatory overflow-y-scroll size-full">
+                <section class="flex flex-col gap-5 z-10 w-screen snap-start h-128 justify-center">
                     <p class="text-center">
                         <a class="text-3xl">
                             Connect with your lab with
@@ -40,12 +40,16 @@
                         your trusted partner in productivity!
                     </p>
                 </section>
-                <section class="flex flex-col gap-5">
+                <section class="flex flex-col gap-5 z-10 w-screen snap-start h-128 justify-center">
                     <p class="text-center">
+                        <a class="text-3xl text-gray-300">
+                            Fast Response Time
+                        </a>
+                        <br>
                         Sign off or Ask question with fast response time!
                     </p>
                 </section>
-                <section class="flex flex-col gap-5">
+                <section class="flex flex-col gap-5 z-10 w-screen snap-start h-128 justify-center">
                     <p class="text-center">
                         Provides you the better lab experience!
                     </p>
