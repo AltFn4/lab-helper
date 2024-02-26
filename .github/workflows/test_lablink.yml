@@ -6,7 +6,7 @@ name: Build and deploy PHP app to Azure Web App - lablink
 on:
   push:
     branches:
-      - main
+      - test
   workflow_dispatch:
 
 jobs:
