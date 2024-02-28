@@ -31,7 +31,12 @@ export default {
                 },
             }),
             height: {
-                '128': '32rem',
+                '128': '48rem',
+            },
+            backgroundImage: {
+                'uni': "url('https://visitwalesimages.thedms.co.uk/propertypics/MW/vlarge/0926720__9.jpg')",
+                'happy_student': "url('https://thumbs.dreamstime.com/b/happy-german-female-student-group-computer-science-students-happy-german-female-student-group-computer-science-176998474.jpg')",
+                'happy_helper': "url('https://thumbs.dreamstime.com/b/positive-classmates-smiling-looking-screen-pc-learning-computer-science-classroom-happy-students-enjoying-263549346.jpg')",
             },
         },
     },
