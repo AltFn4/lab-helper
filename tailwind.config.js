@@ -3,7 +3,6 @@ import forms from "@tailwindcss/forms";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-    enabled: process.env.NODE_ENV === "production",
     content: [
         "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
         "./storage/framework/views/*.php",
@@ -35,11 +34,9 @@ export default {
                 128: "48rem",
             },
             backgroundImage: {
-                uni: "url('https://visitwalesimages.thedms.co.uk/propertypics/MW/vlarge/0926720__9.jpg')",
-                happy_student:
-                    "url('https://thumbs.dreamstime.com/b/happy-german-female-student-group-computer-science-students-happy-german-female-student-group-computer-science-176998474.jpg')",
-                happy_helper:
-                    "url('https://thumbs.dreamstime.com/b/positive-classmates-smiling-looking-screen-pc-learning-computer-science-classroom-happy-students-enjoying-263549346.jpg')",
+                uni: "url('/images/uni.jpg')",
+                happy_student: "url('/images/happy_student.jpg')",
+                happy_helper: "url('/images/happy_helper.jpg')",
             },
         },
     },
