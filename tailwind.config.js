@@ -1,6 +1,5 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
-import 'tailwindcss/tailwind.css';
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
