@@ -29,7 +29,7 @@
             <a id="top"></a>
             <article class="snap-y snap-mandatory overflow-hidden">
                 <section class="snap-center snap-always h-128 box-border relative">
-                    <div class="bg-uni bg-no-repeat bg-cover bg-center blur size-full"></div>
+                    <div class="bg-uni bg-no-repeat bg-cover bg-center blur h-128"></div>
                     <div class="absolute w-full z-10 flex flex-col gap-5 justify-center top-1/2 left-0 right-0 ml-auto mr-auto">
                       <p class="text-center">
                         <a class="text-3xl">
@@ -46,7 +46,7 @@
                    
                 </section>
                 <section class="snap-center snap-always h-128 box-border relative">
-                  <div class="bg-happy_helper bg-no-repeat bg-cover bg-center blur size-full"></div>
+                  <div class="bg-happy_helper bg-no-repeat bg-cover bg-center blur h-128"></div>
                   <p class="absolute w-full z-10 gap-5 justify-center top-1/2 left-0 right-0 ml-auto mr-auto text-center">
                         <a class="text-3xl text-gray-300">
                             Fast Response Time
@@ -56,7 +56,7 @@
                   </p>
                 </section>
                 <section class="snap-center snap-always h-128 box-border relative">
-                  <div class="bg-happy_student bg-no-repeat bg-cover bg-center blur size-full"></div>
+                  <div class="bg-happy_student bg-no-repeat bg-cover bg-center blur h-128"></div>
                   <p class="absolute w-full z-10 justify-center top-1/2 left-0 right-0 ml-auto mr-auto text-center">
                     <a class="text-3xl text-gray-300">
                             Enhanced lab experience
