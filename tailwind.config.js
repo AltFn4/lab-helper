@@ -1,5 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
+import 'tailwindcss/tailwind.css'
 /** @type {import('tailwindcss').Config} */
 export default {
     content: [
@@ -36,8 +37,5 @@ export default {
         },
     },
 
-    plugins: [
-        forms,
-        ...(process.env.NODE_ENV === 'production' ? { cssnano: {} } : {}),
-    ],
+    plugins: [forms],
 };
