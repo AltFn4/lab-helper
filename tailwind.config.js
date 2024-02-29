@@ -34,9 +34,9 @@ export default {
                 128: "48rem",
             },
             backgroundImage: {
-                uni: "url('/images/uni.jpg')",
-                happy_student: "url('/images/happy_student.jpg')",
-                happy_helper: "url('/images/happy_helper.jpg')",
+                uni: "url('/storage/images/uni.jpg')",
+                happy_student: "url('/storage/images/happy_student.jpg')",
+                happy_helper: "url('/storage/images/happy_helper.jpg')",
             },
         },
     },
