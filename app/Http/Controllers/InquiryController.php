@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Inquiry;
+use App\Events\InquiryUpdated;
 
 class InquiryController extends Controller
 {
@@ -52,6 +53,29 @@ class InquiryController extends Controller
         $inquiry->save();
 
         return view('inquiry.show', ['inquiry' => $inquiry]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request)
+    {
+        $request->validate([
+            'code' => 'required',
+            'inquiry_id' => 'required',
+        ]);
+
+        $inq = Inquiry::find($request->inquiry_id);
+        $code = $request->code;
+
+        if ($inq)
+        {
+            $inq->code = $code;
+            $inq->update();
+            event(new InquiryUpdated($inq));
+        }
+
+        return;
     }
 
     public function destroy(Request $request)
