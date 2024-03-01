@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
         <title>LabLink - Your Virtual Lab Assistant</title>
 
@@ -43,7 +44,7 @@
                         your trusted partner in productivity!
                       </p>
                     </div>
-                   
+
                 </section>
                 <section class="snap-center snap-always h-128 box-border relative">
                   <div class="bg-happy_helper bg-no-repeat bg-cover bg-center blur h-128"></div>
