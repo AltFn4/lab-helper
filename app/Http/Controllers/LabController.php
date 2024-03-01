@@ -49,10 +49,12 @@ class LabController extends Controller
 
         if ($user->role == 'student') {
             return view('labs.seat', ['lab' => $lab]);
+        } elseif ($user->role == 'assistant') {
+            $user->lab_id = $id;
+            $user->save();
         }
 
-        return view('review.index');
-        
+        return view('dashboard');
     }
 
     /**
@@ -74,8 +76,11 @@ class LabController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $user = $request->user();
+        $user->lab_id = NULL;
+        $user->save();
+        return view('dashboard');
     }
 }
