@@ -28,13 +28,45 @@
     <p class="p-5 m-5 text-center text-gray-500">Request does not exist.</p>
     @endisset
     <script>
-        var codeTextarea = document.getElementById('codeTextarea');
-        var editor = CodeMirror.fromTextArea(codeTextarea, {
-            lineNumbers: true,
-            mode: 'javascript',
-            theme: 'yonce',
-            styleActiveLine: true,
-            matchBrackets: true,
+        document.addEventListener("DOMContentLoaded", function(){
+            if ("{{ Auth::check() }}") {                // Connect to Pusher.
+                var pusher = new Pusher("{{ env('PUSHER_APP_KEY') }}", {
+                    cluster: "{{ env('PUSHER_APP_CLUSTER') }}"
+                });
+
+                var codeTextarea = document.getElementById('codeTextarea');
+                var editor = CodeMirror.fromTextArea(codeTextarea, {
+                    lineNumbers: true,
+                    mode: 'javascript',
+                    theme: 'yonce',
+                    styleActiveLine: true,
+                    matchBrackets: true,
+                });
+                editor.on('change', function() {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        url: "{{ route('inquiry.update') }}",
+                        method: 'PATCH',
+                        data: {
+                            'code': editor.getValue(),
+                            'inquiry_id': "{{ $inquiry->id }}",
+                        },
+                        success: function(data) {
+                            console.log('success!');
+                        }
+                    });
+                });
+
+                var channel = pusher.subscribe('inquiry-' + "{{ $inquiry->id }}");
+                channel.bind('notify', function(data) {
+                    var code = data.inquiry.code;
+                    if (editor.getValue() != code) {
+                        editor.getDoc().setValue(code);
+                    }
+                });
+            }
         });
     </script>
 </x-app-layout>

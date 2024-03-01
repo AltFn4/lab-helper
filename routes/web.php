@@ -49,7 +49,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/inquiry', [InquiryController::class, 'edit'])->name('inquiry.edit');
     Route::get('/live', [InquiryController::class, 'show'])->name('inquiry.show');
     Route::post('/inquiry', [InquiryController::class, 'create'])->name('inquiry.create');
-    Route::delete('/live', [InquiryController::class, 'destroy'])->name('inquiry.destroy');
+    Route::patch('/inquiry', [InquiryController::class, 'update'])->name('inquiry.update');
+    Route::delete('/inquiry', [InquiryController::class, 'destroy'])->name('inquiry.destroy');
 });
 
 require __DIR__.'/auth.php';

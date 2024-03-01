@@ -39,6 +39,13 @@ class DatabaseSeeder extends Seeder
             'role' => 'assistant',
         ]);
 
+        \App\Models\User::factory()->create([
+            'name' => 'Hello',
+            'email' => 'hello@example.com',
+            'password' => 'qwerty123',
+            'role' => 'student',
+        ]);
+
         $seat = Seat::find(1);
         $seat->user_id = 1;
         $seat->update();
