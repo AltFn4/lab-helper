@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Inquiry::class);
     }
+
+    public function lab ()
+    {
+        return $this->belongsTo(Lab::class);
+    }
 }

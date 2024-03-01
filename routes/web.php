@@ -5,6 +5,7 @@ use App\Http\Controllers\LabController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\InquiryController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/labs', [LabController::class, 'index'])->name('labs.index');
     Route::post('/labs', [LabController::class, 'show'])->name('select.lab');
     Route::patch('/labs', [SeatController::class, 'update'])->name('select.seat');
-    Route::delete('/labs', [SeatController::class, 'destroy'])->name('labs.leave');
+    Route::delete('/lab', [LabController::class, 'destroy'])->name('lab.leave');
+    Route::delete('/seat', [SeatController::class, 'destroy'])->name('seat.leave');
 });
 
 Route::get('/request', function (Request $request) {

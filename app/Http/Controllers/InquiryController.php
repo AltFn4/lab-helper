@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\Inquiry;
 
 class InquiryController extends Controller
-{    
+{
     public function index(Request $request)
     {
-        $request->validate([
-            'lab_id' => 'required'
-        ]);
-        $lab_id = $request->lab_id;
+        $lab_id = $request->user()->lab_id;
+        if ($lab_id == NULL)
+        {
+            return redirect()->back();
+        }
         $inquiries = Inquiry::all()->filter(function (Inquiry $in) use ($lab_id) {
             return $in->user->seat->lab->id == $lab_id;
         })->sortBy('created_at');
@@ -35,7 +36,7 @@ class InquiryController extends Controller
         $request->validate([
             'type' => 'required',
         ]);
-        
+
         // Cancel inquiry creation if there exists one for the same user or user has not picked a seat.
         if ($request->user()->inquiry || $request->user()->seat == NULL)
         {
