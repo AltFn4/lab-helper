@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Inquiry;
 use App\Events\InquiryUpdated;
+use Illuminate\Support\Facades\Redirect;
 
 class InquiryController extends Controller
 {
@@ -21,15 +22,27 @@ class InquiryController extends Controller
         return view('inquiry.index', ['inquiries' => $inquiries]);
     }
 
-    public function edit()
+    public function edit(Request $request)
     {
+        $inquiry = $request->user()->inquiry;
+
+        if ($inquiry)
+        {
+            return Redirect::to('dashboard');
+        }
+
         return view('inquiry.edit');
     }
 
     public function show(Request $request)
     {
         $inquiry = Inquiry::find($request->inquiry_id);
-        return view('inquiry.show', ['inquiry' => $inquiry]);
+        if ($inquiry)
+        {
+            return view('inquiry.show', ['inquiry' => $inquiry]);
+        }
+
+        return Redirect::to('dashboard');
     }
 
     public function create(Request $request)

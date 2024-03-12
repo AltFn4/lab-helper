@@ -28,8 +28,15 @@
     <p class="p-5 m-5 text-center text-gray-500">Request does not exist.</p>
     @endisset
     <script>
+        const params = new URLSearchParams(window.location.search);
+        var id = params.get('inquiry_id');
+
+        if("{{isset($inquiry)}}") {
+            id = "{{ $inquiry->id }}";
+        }
+
         document.addEventListener("DOMContentLoaded", function(){
-            if ("{{ Auth::check() }}") {                // Connect to Pusher.
+            if (id) {                // Connect to Pusher.
                 var pusher = new Pusher("{{ env('PUSHER_APP_KEY') }}", {
                     cluster: "{{ env('PUSHER_APP_CLUSTER') }}"
                 });
@@ -51,7 +58,7 @@
                         method: 'PATCH',
                         data: {
                             'code': editor.getValue(),
-                            'inquiry_id': "{{ $inquiry->id }}",
+                            'inquiry_id': id,
                         },
                         success: function(data) {
                             console.log('success!');
@@ -59,7 +66,7 @@
                     });
                 });
 
-                var channel = pusher.subscribe('inquiry-' + "{{ $inquiry->id }}");
+                var channel = pusher.subscribe('inquiry-' + id);
                 channel.bind('notify', function(data) {
                     var code = data.inquiry.code;
                     if (editor.getValue() != code) {
