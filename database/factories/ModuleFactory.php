@@ -17,7 +17,7 @@ class ModuleFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'name' => 'CS-' . random_int(100, 400) . ' ' . fake()->word(),
         ];
     }
 }

@@ -4,15 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Lab;
+use Carbon\Carbon;
 
 class LabController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of available labs sorted by their starting time.
      */
     public function index()
     {
-        return view('labs.lab', ['labs' => Lab::all()]);
+        return view('labs.lab', ['labs' => Lab::all()->sortBy('start_time')->where(function ($lab)
+        {
+            $duration = $lab->duration;
+            return Carbon::now()->addHours(-$duration)->lt($lab->start_time);
+        })]);
     }
 
     /**

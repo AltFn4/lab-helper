@@ -15,7 +15,7 @@ class ModuleSeeder extends Seeder
     {
         Module::factory(10)->create();
         Module::factory()->create([
-            'name' => 'Software Engineering',
+            'name' => 'CS-123 Test',
         ]);
     }
 }
