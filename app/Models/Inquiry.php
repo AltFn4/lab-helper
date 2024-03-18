@@ -13,6 +13,7 @@ class Inquiry extends Model
         'type',
         'desc',
         'code',
+        'link',
         'student_id',
         'assistant_id',
     ];

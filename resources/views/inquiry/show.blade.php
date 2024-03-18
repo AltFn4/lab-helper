@@ -11,11 +11,13 @@
         <div class="flex flex-col gap-2">
             <h2 class="text-xl">Details</h2>
             <p>Type: {{ $inquiry->type }}</p>
-            <div class="flex flex-col gap-2">
-                <label for="request-desc">Description</label>
-                <textarea name="desc" id="request-desc" cols="30" rows="5" class="bg-gray-800 rounded"
-                    placeholder="Describe the context of the request...">{{ $inquiry->desc }}</textarea>
-            </div>
+            <p>Description: {{ $inquiry->desc }}</p>
+            @if($inquiry->link != NULL)
+            <label for="link">Link:</label>
+            <a name="link" class="text-cyan-300" href="{{ $inquiry->link }}" target="_blank">
+                <img width="16" height="16" src="{{ $inquiry->link }}/favicon.ico" alt="Link">
+            </a>
+            @endif
             @if($inquiry->assistant != NULL && $inquiry->assistant->id == Auth::user()->id)
             <form action="{{ route('inquiry.assign') }}" method="POST">
                 @csrf
@@ -43,7 +45,7 @@
         var student_id = null;
         var assistant_id = null;
 
-        if("{{ isset($inquiry) }}") {
+        if ("{{ isset($inquiry) }}") {
             id = "{{ $inquiry->id }}";
             student_id = "{{ $inquiry->student_id }}";
             assistant_id = "{{ $inquiry->assistant_id }}";
@@ -51,8 +53,8 @@
 
         var canEdit = (user_id == student_id || user_id == assistant_id);
 
-        document.addEventListener("DOMContentLoaded", function(){
-            if (id) {                // Connect to Pusher.
+        document.addEventListener("DOMContentLoaded", function() {
+            if (id) { // Connect to Pusher.
                 var pusher = new Pusher("{{ env('PUSHER_APP_KEY') }}", {
                     cluster: "{{ env('PUSHER_APP_CLUSTER') }}"
                 });

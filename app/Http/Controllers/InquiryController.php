@@ -65,18 +65,26 @@ class InquiryController extends Controller
     {
         $request->validate([
             'type' => 'required',
+            'link' => 'url|nullable',
         ]);
 
-        // Cancel inquiry creation if there exists one for the same user or user has not picked a seat.
-        if ($request->user()->inquiry || $request->user()->seat == NULL)
+        // Cancel inquiry creation if there exists one for the same user.
+        if ($request->user()->inquiry != NULL)
         {
-            return back();
+            return back()->withErrors('Error: A request has already been created.');
+        }
+
+        // Reject inquiry creation if user has not chosen lab or seat.
+        if ($request->user()->seat == NULL)
+        {
+            return back()->withErrors('Error: Lab or seat has not been chosen.');
         }
 
         $inquiry = Inquiry::create([
             'code' => $request->code,
             'type' => $request->type,
             'desc' => $request->desc,
+            'link' => $request->link,
             'student_id' => $request->user()->id,
             'assistant_id' => null
         ]);
