@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('inquiries', function (Blueprint $table) {
             $table->id();
             $table->string('type');
-            $table->string('desc')->nullable();
-            $table->string('code')->nullable();
+            $table->longText('desc')->nullable();
+            $table->longText('code')->nullable();
             $table->string('link')->nullable();
             $table->foreignId('student_id')->constrained(
                 table: 'users',
