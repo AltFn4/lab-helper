@@ -14,40 +14,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Lab::factory(10)->create();
-        Lab::factory()->create([
-            'name' => 'cofo 201',
+        $this->call([
+            RoleSeeder::class,
+            ModuleSeeder::class,
+            RoomSeeder::class,
+            SeatSeeder::class,
+            LabSeeder::class,
+            UserSeeder::class,
         ]);
-
-        foreach(Lab::all() as $lab)
-        {
-            $id = $lab->id;
-            for ($i = 0; $i < 20; $i++)
-            {
-                $seat = new Seat;
-                $seat->lab_id = $id;
-                $seat->save();
-            }
-        }
-
-        \App\Models\User::factory(10)->create();
-
-        \App\Models\User::factory()->create([
-            'name' => 'Tristan',
-            'email' => '2143975@swansea.ac.uk',
-            'password' => 'qwerty123',
-            'role' => 'assistant',
-        ]);
-
-        \App\Models\User::factory()->create([
-            'name' => 'Hello',
-            'email' => 'hello@example.com',
-            'password' => 'qwerty123',
-            'role' => 'student',
-        ]);
-
-        $seat = Seat::find(1);
-        $seat->user_id = 1;
-        $seat->update();
     }
 }

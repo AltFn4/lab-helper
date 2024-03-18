@@ -13,11 +13,22 @@ class Inquiry extends Model
         'type',
         'desc',
         'code',
-        'user_id',
+        'student_id',
+        'assistant_id',
     ];
 
-    public function user ()
+    public function student ()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'student_id');
+    }
+
+    public function assistant ()
+    {
+        return $this->belongsTo(User::class, 'assistant_id');
+    }
+
+    public function lab ()
+    {
+        return $this->belongsTo(Lab::class);
     }
 }

@@ -16,12 +16,21 @@
                 <textarea name="desc" id="request-desc" cols="30" rows="5" class="bg-gray-800 rounded"
                     placeholder="Describe the context of the request...">{{ $inquiry->desc }}</textarea>
             </div>
+            @if($inquiry->assistant != NULL && $inquiry->assistant->id == Auth::user()->id)
+            <form action="{{ route('inquiry.assign') }}" method="POST">
+                @csrf
+                @method("PATCH")
+                <input type="hidden" name="inquiry_id" value="{{ $inquiry->id }}">
+                <button class="p-2 m-2 bg-green-500 text-white rounded">Assign</button>
+            </form>
+            @elseif($inquiry->student->id == Auth::user()->id)
             <form action="{{ route('inquiry.destroy') }}" method="POST">
                 @csrf
                 @method("DELETE")
                 <input type="hidden" name="inquiry_id" value="{{ $inquiry->id }}">
                 <button class="p-2 m-2 bg-red-500 text-white rounded">Delete</button>
             </form>
+            @endif
         </div>
     </div>
     @else
@@ -30,10 +39,17 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         var id = params.get('inquiry_id');
+        var user_id = "{{ Auth::user()->id }}";
+        var student_id = null;
+        var assistant_id = null;
 
-        if("{{isset($inquiry)}}") {
+        if("{{ isset($inquiry) }}") {
             id = "{{ $inquiry->id }}";
+            student_id = "{{ $inquiry->student_id }}";
+            assistant_id = "{{ $inquiry->assistant_id }}";
         }
+
+        var canEdit = (user_id == student_id || user_id == assistant_id);
 
         document.addEventListener("DOMContentLoaded", function(){
             if (id) {                // Connect to Pusher.
@@ -48,7 +64,9 @@
                     theme: 'yonce',
                     styleActiveLine: true,
                     matchBrackets: true,
+                    readOnly: !canEdit,
                 });
+
                 editor.on('change', function() {
                     $.ajax({
                         headers: {
@@ -68,7 +86,9 @@
 
                 var channel = pusher.subscribe('inquiry-' + id);
                 channel.bind('notify', function(data) {
-                    var code = data.inquiry.code;
+                    var inq = data.inquiry;
+                    var code = inq.code;
+
                     if (editor.getValue() != code) {
                         editor.getDoc().setValue(code);
                     }

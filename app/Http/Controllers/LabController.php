@@ -12,7 +12,7 @@ class LabController extends Controller
      */
     public function index()
     {
-        return view('labs.lab', ['labs' => Lab::all()->sortBy('name')]);
+        return view('labs.lab', ['labs' => Lab::all()]);
     }
 
     /**
@@ -44,12 +44,12 @@ class LabController extends Controller
         $user = $request->user();
 
         if ($lab == NULL) {
-            return back()->with('message', 'Inavlid lab selection.');;
+            return back()->with('message', 'Invalid lab selection.');;
         }
 
-        if ($user->role == 'student') {
+        if ($user->hasRole('student')) {
             return view('labs.seat', ['lab' => $lab]);
-        } elseif ($user->role == 'assistant') {
+        } elseif ($user->hasRole('assistant')) {
             $user->lab_id = $id;
             $user->save();
         }

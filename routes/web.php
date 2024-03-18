@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/inquiries', [InquiryController::class, 'index'])->name('inquiry.index');
     Route::get('/inquiry', [InquiryController::class, 'edit'])->name('inquiry.edit');
     Route::get('/live', [InquiryController::class, 'show'])->name('inquiry.show');
+    Route::patch('/live', [InquiryController::class, 'assign'])->name('inquiry.assign');
     Route::post('/inquiry', [InquiryController::class, 'create'])->name('inquiry.create');
     Route::patch('/inquiry', [InquiryController::class, 'update'])->name('inquiry.update');
     Route::delete('/inquiry', [InquiryController::class, 'destroy'])->name('inquiry.destroy');

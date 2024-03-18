@@ -1,7 +1,7 @@
 <section class="p-2 grid grid-cols-3 gap-5 bg-gray-500">
     <a class="p-2 {!! $stage == 'lab' ? 'bg-green-500' : 'bg-white' !!} text-center">
         @isset($lab)
-        {{ $lab->name }}
+        {{ $lab->room->name }}
         @else
         Select lab
         @endisset
@@ -16,5 +16,5 @@
     <p class="p-2 {!! $stage == 'done' ? 'bg-green-500' : 'bg-white' !!} text-center">Done</p>
 </section>
 <p>
-    
+
 </p>

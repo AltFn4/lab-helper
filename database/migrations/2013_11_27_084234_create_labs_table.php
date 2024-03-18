@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('labs', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->foreignId('module_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('room_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
+            $table->integer('duration');
+            $table->timestamp('start_time');
             $table->timestamps();
         });
     }

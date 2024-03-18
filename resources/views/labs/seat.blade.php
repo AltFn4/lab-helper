@@ -8,9 +8,9 @@
             <input type="hidden" name="seat_id" id="seat_id" required>
             <div class="p-5 m-5 flex flex-col justify-center gap-5 bg-gray-100 rounded">
                 <div class="grid grid-rows-4 grid-flow-col gap-5">
-                    @for($i = 0; $i < count($lab->seats); $i++)                
-                    @if($lab->seats->sortBy('id')[$i]->user_id == NULL)
-                    <button id="seat" name="{{ $lab->seats->sortBy('id')[$i]->id }}" type="button" onclick="select(this)">
+                    @for($i = 0; $i < count($lab->room->seats); $i++)
+                    @if($lab->room->seats->sortBy('id')[$i]->user_id == NULL)
+                    <button id="seat" name="{{ $lab->room->seats->sortBy('id')[$i]->id }}" type="button" onclick="select(this)">
                         <x-empty-seat-logo width="50px" height="50px"/>
                     </button>
                     @else
@@ -18,10 +18,10 @@
                     @endif
                     @endfor
                 </div>
-                
+
                 <x-table-logo height="50px"/>
             </div>
-            
+
             <x-primary-button>
                 Select
             </x-primary-button>

@@ -9,24 +9,34 @@ use Illuminate\Support\Facades\Redirect;
 
 class InquiryController extends Controller
 {
+    /**
+     * Show a list of all requests.
+     */
     public function index(Request $request)
     {
         $lab_id = $request->user()->lab_id;
+
         if ($lab_id == NULL)
         {
             return redirect()->back();
         }
+
+        // Get requests that are in the specified lab and has not been assigned yet.
         $inquiries = Inquiry::all()->filter(function (Inquiry $in) use ($lab_id) {
-            return $in->user->seat->lab->id == $lab_id;
+            return $in->lab->id == $lab_id && $in->assistant_id == null;
         })->sortBy('created_at');
+
         return view('inquiry.index', ['inquiries' => $inquiries]);
     }
 
+    /**
+     * Show the page for editing a request.
+     */
     public function edit(Request $request)
     {
         $inquiry = $request->user()->inquiry;
 
-        if ($inquiry)
+        if ($inquiry != NULL)
         {
             return Redirect::to('dashboard');
         }
@@ -34,6 +44,9 @@ class InquiryController extends Controller
         return view('inquiry.edit');
     }
 
+    /**
+     * Show the specified request.
+     */
     public function show(Request $request)
     {
         $inquiry = Inquiry::find($request->inquiry_id);
@@ -45,6 +58,9 @@ class InquiryController extends Controller
         return Redirect::to('dashboard');
     }
 
+    /**
+     * Create a new request.
+     */
     public function create(Request $request)
     {
         $request->validate([
@@ -61,7 +77,8 @@ class InquiryController extends Controller
             'code' => $request->code,
             'type' => $request->type,
             'desc' => $request->desc,
-            'user_id' => $request->user()->id,
+            'student_id' => $request->user()->id,
+            'assistant_id' => null
         ]);
         $inquiry->save();
 
@@ -91,6 +108,9 @@ class InquiryController extends Controller
         return;
     }
 
+    /**
+     * Destroy the request.
+     */
     public function destroy(Request $request)
     {
         $request->validate([
@@ -103,5 +123,28 @@ class InquiryController extends Controller
         }
 
         return view('dashboard');
+    }
+
+    /**
+     * Assign the request to an assistant.
+     */
+    public function assign(Request $request)
+    {
+        $request->validate([
+            'inquiry_id' => 'required',
+        ]);
+
+        $inquiry = Inquiry::find($request->inquiry_id);
+        $user = $request->user();
+        $isAssistant = $user->role == 'assistant';
+
+        if ($inquiry && $inquiry->assistant_id == NULL && $isAssistant)
+        {
+            $inquiry->assistant_id = $user->id;
+            $inquiry->update();
+            event(new InquiryUpdated($inquiry));
+        }
+
+        return view('inquiry.show', ['inquiry' => $inquiry]);
     }
 }
