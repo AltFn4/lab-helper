@@ -23,6 +23,8 @@
                 <div class="flex flex-col gap-2">
                     <label for="request-desc">Description</label>
                     <textarea name="desc" id="request-desc" cols="30" rows="5" class="bg-gray-800 rounded" placeholder="Describe the context of the request...">{{ isset($inquiry) ? $inquiry->desc : '' }}</textarea>
+                    <label for="link">External link</label>
+                    <textarea name="link" id="link" cols="30" rows="1" class="bg-gray-800 rounded" placeholder="Add an external link of the request..."></textarea>
                 </div>
                 <button class="p-2 m-2 bg-green-500 text-white rounded">Queue</button>
             </div>
