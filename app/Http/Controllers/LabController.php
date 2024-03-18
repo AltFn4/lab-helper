@@ -42,9 +42,9 @@ class LabController extends Controller
     public function show(Request $request)
     {
         $request->validate([
-            'id' => 'required'
+            'lab_id' => 'required'
         ]);
-        $id = $request->id;
+        $id = $request->lab_id;
         $lab = Lab::find($id);
         $user = $request->user();
 
