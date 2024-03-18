@@ -9,13 +9,28 @@ class Lab extends Model
 {
     use HasFactory;
 
-    public function seats ()
+    public function module ()
     {
-        return $this->hasMany(Seat::class);
+        return $this->belongsTo(Module::class);
+    }
+
+    public function room ()
+    {
+        return $this->belongsTo(Room::class);
+    }
+
+    public function signoffs ()
+    {
+        return $this->hasMany(Signoff::class);
     }
 
     public function users ()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function inquiries ()
+    {
+        return $this->hasMany(Inquiry::class);
     }
 }

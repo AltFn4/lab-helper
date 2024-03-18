@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -43,6 +44,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function lab ()
+    {
+        return $this->belongsTo(Lab::class);
+    }
+
     public function seat ()
     {
         return $this->hasOne(Seat::class);
@@ -50,11 +56,16 @@ class User extends Authenticatable
 
     public function inquiry ()
     {
-        return $this->hasOne(Inquiry::class);
+        return $this->hasOne(Inquiry::class, $this->hasRole('student') ? 'student_id' : 'assistant_id');
     }
 
-    public function lab ()
+    public function signoffs ()
     {
-        return $this->belongsTo(Lab::class);
+        return $this->hasMany(Signoff::class);
+    }
+
+    public function modules ()
+    {
+        return $this->hasMany(Module::class);
     }
 }

@@ -16,11 +16,13 @@ return new class extends Migration
             $table->string('type');
             $table->string('desc')->nullable();
             $table->string('code')->nullable();
-            $table->bigInteger('user_id')->unsigned();
+            $table->foreignId('student_id')->constrained(
+                table: 'users',
+            )->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('assistant_id')->nullable()->constrained(
+                table: 'users',
+            )->cascadeOnUpdate()->nullOnDelete();
             $table->timestamps();
-            
-            $table->foreign('user_id')->references('id')->on('users')
-                ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

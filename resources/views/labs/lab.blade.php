@@ -13,7 +13,7 @@
             <select name="id" size="5" class="p-5 m-5 bg-gray-700 rounded text-gray-100" required>
                 @foreach ($labs as $lab)
                 <option value="{{ $lab->id }}">
-                    {{ $lab->name }}
+                    {{ $lab->room->name }}
                 </option>
                 @endforeach
             </select>

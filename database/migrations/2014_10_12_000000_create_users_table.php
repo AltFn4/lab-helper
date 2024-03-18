@@ -17,12 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('role')->default('student');
-            $table->bigInteger('lab_id')->unsigned()->nullable();
+            $table->foreignId('lab_id')->nullable()->constrained()->cascadeOnUpdate()->nullOnDelete();
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('lab_id')->references('id')->on('labs')
-                ->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
