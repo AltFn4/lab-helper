@@ -18,7 +18,7 @@
                 <img width="16" height="16" src="{{ $inquiry->link }}/favicon.ico" alt="Link">
             </a>
             @endif
-            @if($inquiry->assistant == NULL)
+            @if($inquiry->assistant == NULL && Auth::user()->hasRole('assistant'))
             <form action="{{ route('inquiry.assign') }}" method="POST">
                 @csrf
                 @method("PATCH")
