@@ -31,6 +31,7 @@
         </form>
         @endif
     </div>
+    @if(Auth::user()->seat != NULL)
     <div class="p-4 flex flex-col gap-3 bg-gray-500 rounded ">
         @if(Auth::user()->inquiry == NULL)
         <p class="text-gray-100 text-lg">
@@ -58,4 +59,5 @@
         </form>
         @endif
     </div>
+    @endif
 </section>

@@ -18,14 +18,14 @@
                 <img width="16" height="16" src="{{ $inquiry->link }}/favicon.ico" alt="Link">
             </a>
             @endif
-            @if($inquiry->assistant != NULL && $inquiry->assistant->id == Auth::user()->id)
+            @if($inquiry->assistant == NULL)
             <form action="{{ route('inquiry.assign') }}" method="POST">
                 @csrf
                 @method("PATCH")
                 <input type="hidden" name="inquiry_id" value="{{ $inquiry->id }}">
                 <button class="p-2 m-2 bg-green-500 text-white rounded">Assign</button>
             </form>
-            @elseif($inquiry->student->id == Auth::user()->id)
+            @elseif($inquiry->student->id == Auth::user()->id || $inquiry->assistant->id == Auth::user()->id)
             <form action="{{ route('inquiry.destroy') }}" method="POST">
                 @csrf
                 @method("DELETE")
@@ -54,7 +54,7 @@
         var canEdit = (user_id == student_id || user_id == assistant_id);
 
         document.addEventListener("DOMContentLoaded", function() {
-            if (id) { // Connect to Pusher.
+            if (id) {
                 var pusher = new Pusher("{{ env('PUSHER_APP_KEY') }}", {
                     cluster: "{{ env('PUSHER_APP_CLUSTER') }}"
                 });

@@ -71,13 +71,13 @@ class InquiryController extends Controller
         // Cancel inquiry creation if there exists one for the same user.
         if ($request->user()->inquiry != NULL)
         {
-            return back()->withErrors('Error: A request has already been created.');
+            return back()->withErrors('A request has already been created.');
         }
 
         // Reject inquiry creation if user has not chosen lab or seat.
         if ($request->user()->seat == NULL)
         {
-            return back()->withErrors('Error: Lab or seat has not been chosen.');
+            return back()->withErrors('Lab or seat has not been chosen.');
         }
 
         $inquiry = Inquiry::create([

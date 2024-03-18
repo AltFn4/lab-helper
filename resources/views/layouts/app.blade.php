@@ -40,6 +40,11 @@
 
             <!-- Page Content -->
             <main>
+                @if($errors->any())
+                    <div class="p-2 bg-red-500 w-full">
+                        <p class="text-white">{{ $errors->first() }}</p>
+                    </div>
+                @endif
                 {{ $slot }}
             </main>
         </div>
