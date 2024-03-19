@@ -2,6 +2,8 @@
     @include('labs.partials.stage', ['stage' => 'seat'])
     <div class="p-5 flex flex-col items-center">
         <h1 class="text-white text-5xl">Select Seat</h1>
+        <p class="text-gray-100">Select the seat you are located in.</p>
+        <p class="text-gray-100 text-sm">*Green = selecting; Red = unavailable; Gray = available.</p>
         <form action="{{route('select.seat')}}" method="post">
             @csrf
             @method("PATCH")
@@ -18,10 +20,8 @@
                     @endif
                     @endforeach
                 </div>
-
                 <x-table-logo height="50px"/>
             </div>
-
             <x-primary-button>
                 Select
             </x-primary-button>
@@ -30,11 +30,17 @@
 </x-app-layout>
 <script>
     function select(id) {
+        const base_rect = 183;
+        const base_ellipse = 202;
         var seat_id = $('#seat_id');
         seat_id.val(id);
         $('.seat').each(function (_, seat) {
-            var circle = seat.getElementsByTagName("ellipse")[0];
-            circle.style.fill = $(this).val() == id ? "blue" : "white";
+            var v = $(this).val()
+            $(this).find('*').each(function (_, e) {
+                var base = e.tagName == 'rect' ? base_rect : base_ellipse;
+                var c = base + (v == id ? -100 : 0);
+                e.style.fill = `rgb(${c}, ${base}, ${c}`;
+            });
         });
     }
 </script>

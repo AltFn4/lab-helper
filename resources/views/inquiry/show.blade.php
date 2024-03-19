@@ -10,6 +10,9 @@
         </div>
         <div class="flex flex-col gap-2">
             <h2 class="text-xl">Details</h2>
+            @if($inquiry->assistant == NULL)
+            <p id="position">Position: -/-</p>
+            @endif
             <p>Type: {{ $inquiry->type }}</p>
             <p>Description: {{ $inquiry->desc }}</p>
             @if($inquiry->link != NULL)
@@ -91,8 +94,12 @@
                 var channel = pusher.subscribe('inquiry-' + id);
                 channel.bind('notify', function(data) {
                     var author_id = data.author_id;
+                    var current_pos = data.current_pos;
+                    var max_pos = data.max_pos;
                     var inq = data.inquiry;
                     var code = inq.code;
+
+                    $('#position').text('Position: ' + (1 + current_pos) + '/' + max_pos);
 
                     if (editor.getValue() != code && user_id != author_id) {
                         setTimeout(() => {
