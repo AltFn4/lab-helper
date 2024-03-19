@@ -8,15 +8,15 @@
             <input type="hidden" name="seat_id" id="seat_id" required>
             <div class="p-5 m-5 flex flex-col justify-center gap-5 bg-gray-100 rounded">
                 <div class="grid grid-rows-4 grid-flow-col gap-5">
-                    @for($i = 0; $i < count($lab->room->seats); $i++)
-                    @if($lab->room->seats->sortBy('id')[$i]->user_id == NULL)
-                    <button id="seat" name="{{ $lab->room->seats->sortBy('id')[$i]->id }}" type="button" onclick="select(this)">
+                    @foreach($lab->room->seats as $seat)
+                    @if($seat->user_id == NULL)
+                    <button class="seat" type="button" onclick="select('{{ $seat->id }}')" value="{{ $seat->id }}">
                         <x-empty-seat-logo width="50px" height="50px"/>
                     </button>
                     @else
                     <x-used-seat-logo width="50px" height="50px"/>
                     @endif
-                    @endfor
+                    @endforeach
                 </div>
 
                 <x-table-logo height="50px"/>
@@ -29,16 +29,12 @@
     </div>
 </x-app-layout>
 <script>
-    var seat_id = document.getElementById("seat_id")
-    function select(seat) {
-        var seats = document.querySelectorAll("[id='seat']");
-        seats.forEach(s => {
-            var circle = s.getElementsByTagName("ellipse")[0];
-            circle.style.fill = "white";
-            if (seat == s) {
-                circle.style.fill = "blue";
-                seat_id.value = seat.name
-            }
+    function select(id) {
+        var seat_id = $('#seat_id');
+        seat_id.val(id);
+        $('.seat').each(function (_, seat) {
+            var circle = seat.getElementsByTagName("ellipse")[0];
+            circle.style.fill = $(this).val() == id ? "blue" : "white";
         });
-    };
+    }
 </script>

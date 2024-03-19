@@ -52,11 +52,11 @@ class LabController extends Controller
             return back()->with('message', 'Invalid lab selection.');;
         }
 
+        $user->lab_id = $id;
+         $user->save();
+
         if ($user->hasRole('student')) {
             return view('labs.seat', ['lab' => $lab]);
-        } elseif ($user->hasRole('assistant')) {
-            $user->lab_id = $id;
-            $user->save();
         }
 
         return view('dashboard');

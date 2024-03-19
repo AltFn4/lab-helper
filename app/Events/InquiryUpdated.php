@@ -16,13 +16,15 @@ class InquiryUpdated implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $inquiry;
+    public $author_id;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(Inquiry $inquiry)
+    public function __construct(Inquiry $inquiry, $author_id)
     {
         $this->inquiry = $inquiry;
+        $this->author_id = $author_id;
     }
 
     public function broadcastOn()

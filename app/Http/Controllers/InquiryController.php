@@ -23,7 +23,7 @@ class InquiryController extends Controller
 
         // Get requests that are in the specified lab and has not been assigned yet.
         $inquiries = Inquiry::all()->filter(function (Inquiry $in) use ($lab_id) {
-            return $in->lab->id == $lab_id && $in->assistant_id == null;
+            return $in->lab_id == $lab_id && $in->assistant_id == null;
         })->sortBy('created_at');
 
         return view('inquiry.index', ['inquiries' => $inquiries]);
@@ -49,6 +49,9 @@ class InquiryController extends Controller
      */
     public function show(Request $request)
     {
+        $request->validate([
+            'inquiry_id' => 'required',
+        ]);
         $inquiry = Inquiry::find($request->inquiry_id);
         if ($inquiry)
         {
@@ -85,12 +88,13 @@ class InquiryController extends Controller
             'type' => $request->type,
             'desc' => $request->desc,
             'link' => $request->link,
+            'lab_id' => $request->user()->lab->id,
             'student_id' => $request->user()->id,
             'assistant_id' => null
         ]);
         $inquiry->save();
 
-        return view('inquiry.show', ['inquiry' => $inquiry]);
+        return redirect()->route('inquiry.show', ['inquiry_id' => $inquiry->id]);
     }
 
     /**
@@ -110,7 +114,8 @@ class InquiryController extends Controller
         {
             $inq->code = $code;
             $inq->update();
-            event(new InquiryUpdated($inq));
+            $user_id = $request->user()->id;
+            event(new InquiryUpdated($inq, $user_id));
         }
 
         return;
@@ -144,13 +149,12 @@ class InquiryController extends Controller
 
         $inquiry = Inquiry::find($request->inquiry_id);
         $user = $request->user();
-        $isAssistant = $user->role == 'assistant';
 
-        if ($inquiry && $inquiry->assistant_id == NULL && $isAssistant)
+        if ($inquiry && $inquiry->assistant_id == NULL && $user->hasRole('assistant'))
         {
             $inquiry->assistant_id = $user->id;
             $inquiry->update();
-            event(new InquiryUpdated($inquiry));
+            event(new InquiryUpdated($inquiry, $user->id));
         }
 
         return view('inquiry.show', ['inquiry' => $inquiry]);
