@@ -9,9 +9,9 @@ class Seat extends Model
 {
     use HasFactory;
 
-    public function lab ()
+    public function room ()
     {
-        return $this->belongsTo(Lab::class);
+        return $this->belongsTo(Room::class);
     }
 
     public function user ()

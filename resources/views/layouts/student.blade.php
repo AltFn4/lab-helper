@@ -5,12 +5,9 @@
         </p>
 
         @if(Auth::user()->seat)
-        <p>
-            Lab: {{ Auth::user()->lab->room->name }}
-        </p>
-        <p>
-            Seat: {{ Auth::user()->seat->id }}
-        </p>
+        <p>Lab: {{ Auth::user()->lab->room->name }}</p>
+        <p>Module: {{ Auth::user()->lab->module->name }}</p>
+        <p>Seat: {{ Auth::user()->seat->id }}</p>
         <form action="{{ route('seat.leave') }}" method="POST">
             @csrf
             @method('DELETE')

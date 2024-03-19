@@ -16,6 +16,6 @@ class Room extends Model
 
     public function lab ()
     {
-        return $this->hasOne(lab::class);
+        return $this->hasOne(Lab::class);
     }
 }

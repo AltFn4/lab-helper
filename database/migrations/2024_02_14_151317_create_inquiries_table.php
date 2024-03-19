@@ -17,6 +17,9 @@ return new class extends Migration
             $table->longText('desc')->nullable();
             $table->longText('code')->nullable();
             $table->string('link')->nullable();
+            $table->foreignId('lab_id')->constrained(
+                table: 'labs',
+            )->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('student_id')->constrained(
                 table: 'users',
             )->cascadeOnUpdate()->cascadeOnDelete();

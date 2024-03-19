@@ -14,6 +14,7 @@ class Inquiry extends Model
         'desc',
         'code',
         'link',
+        'lab_id',
         'student_id',
         'assistant_id',
     ];

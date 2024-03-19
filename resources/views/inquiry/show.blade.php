@@ -70,30 +70,35 @@
                 });
 
                 editor.on('change', function() {
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-                        url: "{{ route('inquiry.update') }}",
-                        method: 'PATCH',
-                        data: {
-                            'code': editor.getValue(),
-                            'inquiry_id': id,
-                        },
-                        success: function(data) {
-                            console.log('success!');
-                        }
-                    });
+                    setTimeout(() => {
+                        $.ajax({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            },
+                            url: "{{ route('inquiry.update') }}",
+                            method: 'PATCH',
+                            data: {
+                                'code': editor.getValue(),
+                                'inquiry_id': id,
+                            },
+                            success: function(data) {
+                                console.log('success!');
+                            }
+                        })
+                    }, 500);
                 });
 
                 var channel = pusher.subscribe('inquiry-' + id);
                 channel.bind('notify', function(data) {
+                    var author_id = data.author_id;
                     var inq = data.inquiry;
                     var code = inq.code;
 
-                    if (editor.getValue() != code) {
-                        editor.getDoc().setValue(code);
-                    }
+                    if (editor.getValue() != code && user_id != author_id) {
+                        setTimeout(() => {
+                            editor.getDoc().setValue(code);
+                        }, 500)
+                    };
                 });
             }
         });
