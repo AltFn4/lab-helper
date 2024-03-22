@@ -45,6 +45,8 @@
                             <a>
                                 <br>
                                 your trusted partner in productivity!
+                            </a>
+                        </a>
                     </p>
                 </div>
 
