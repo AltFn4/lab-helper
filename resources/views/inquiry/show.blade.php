@@ -26,14 +26,22 @@
                 @csrf
                 @method("PATCH")
                 <input type="hidden" name="inquiry_id" value="{{ $inquiry->id }}">
-                <button class="p-2 m-2 bg-green-500 text-white rounded">Assign</button>
+                <x-primary-button>Assign</x-primary-butto>
             </form>
             @elseif($inquiry->student->id == Auth::user()->id || $inquiry->assistant->id == Auth::user()->id)
+            @if(Auth::user()->hasRole('assistant'))
+            <form action="{{ route('inquiry.signoff') }}" method="POST">
+                @csrf
+                @method("POST")
+                <input type="hidden" name="inquiry_id" value="{{ $inquiry->id }}">
+                <x-secondary-button type="submit">Sign-off</x-secondary-button>
+            </form>
+            @endif
             <form action="{{ route('inquiry.destroy') }}" method="POST">
                 @csrf
                 @method("DELETE")
                 <input type="hidden" name="inquiry_id" value="{{ $inquiry->id }}">
-                <button class="p-2 m-2 bg-red-500 text-white rounded">Delete</button>
+                <x-danger-button>Delete</x-danger-button>
             </form>
             @endif
         </div>

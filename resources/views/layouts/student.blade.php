@@ -57,4 +57,23 @@
         @endif
     </div>
     @endif
+    <div class="p-4 flex flex-col gap-3 bg-gray-500 rounded col-span-2">
+        <p class="text-gray-100 text-lg">
+            Sign-off Log
+        </p>
+        <div class="grid grid-col-1 gap-3">
+            @if(Auth::user()->signoffs->count() == 0)
+            <p class="text-gray-800 text-center">No sign-off record.</p>
+            @endif
+            @foreach(Auth::user()->signoffs as $signoff)
+            <div class="grid grid-cols-2">
+                <p>
+                    > {{ $signoff->lab->module->name }}
+                </p>
+                <a class="text-gray-800 text-sm text-right">[{{ $signoff->created_at }}]</a>
+            </div>
+            @endforeach
+        </div>
+
+    </div>
 </section>

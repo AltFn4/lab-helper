@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LabController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\SignoffController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
@@ -47,11 +48,12 @@ Route::get('/request', function (Request $request) {
 Route::middleware('auth')->group(function () {
     Route::get('/inquiries', [InquiryController::class, 'index'])->name('inquiry.index');
     Route::get('/inquiry', [InquiryController::class, 'edit'])->name('inquiry.edit');
-    Route::get('/live', [InquiryController::class, 'show'])->name('inquiry.show');
-    Route::patch('/live', [InquiryController::class, 'assign'])->name('inquiry.assign');
     Route::post('/inquiry', [InquiryController::class, 'create'])->name('inquiry.create');
     Route::patch('/inquiry', [InquiryController::class, 'update'])->name('inquiry.update');
     Route::delete('/inquiry', [InquiryController::class, 'destroy'])->name('inquiry.destroy');
+    Route::get('/live', [InquiryController::class, 'show'])->name('inquiry.show');
+    Route::patch('/live', [InquiryController::class, 'assign'])->name('inquiry.assign');
+    Route::post('/live', [SignoffController::class, 'create'])->name('inquiry.signoff');
 });
 
 require __DIR__.'/auth.php';

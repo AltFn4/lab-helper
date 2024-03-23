@@ -135,7 +135,7 @@ class InquiryController extends Controller
             $inquiry->delete();
         }
 
-        return view('dashboard');
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -157,6 +157,6 @@ class InquiryController extends Controller
             event(new InquiryUpdated($inquiry, $user->id));
         }
 
-        return view('inquiry.show', ['inquiry' => $inquiry]);
+        return redirect()->route('inquiry.show', ['inquiry_id' => $inquiry->id]);
     }
 }
