@@ -113,7 +113,9 @@
 
                     if (editor.getValue() != code && user_id != author_id) {
                         setTimeout(() => {
+                            var cursor = editor.getCursor();
                             editor.getDoc().setValue(code);
+                            editor.setCursor(cursor);
                         }, 500)
                     };
                 });
