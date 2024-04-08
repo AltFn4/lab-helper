@@ -37,12 +37,14 @@
                 <x-secondary-button type="submit">Sign-off</x-secondary-button>
             </form>
             @endif
-            <form action="{{ route('inquiry.destroy') }}" method="POST">
-                @csrf
-                @method("DELETE")
+            <div>
+                <x-danger-button id="activate-btn" type="button">
+                    Delete
+                </x-danger-button>
+            </div>
+            <x-confirm-prompt route="{{ route('inquiry.destroy') }}" message="Are you sure you want to delete the request?">
                 <input type="hidden" name="inquiry_id" value="{{ $inquiry->id }}">
-                <x-danger-button>Delete</x-danger-button>
-            </form>
+            </x-confirm-prompt>
             @endif
         </div>
     </div>
