@@ -7,13 +7,12 @@
         <p>
             Lab: {{ Auth::user()->lab->room->name }}
         </p>
-        <form action="{{ route('lab.leave') }}" method="POST">
-            @csrf
-            @method('DELETE')
-            <x-danger-button>
+        <div>
+            <x-danger-button id="activate-btn" type="button">
                 leave
             </x-danger-button>
-        </form>
+        </div>
+        <x-confirm-prompt route="{{ route('lab.leave') }}" message="Are you sure you want to leave the lab?"/>
         @else
         <p>
             Please select a lab.
