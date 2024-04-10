@@ -1,7 +1,7 @@
-<div class="fixed top-0 left-0 w-full h-full bg-gray-500/[.9] hidden" role="alert" id="prompt">
-    <div class="p-5 mx-auto top-full bg-gray-600 text-center w-fit rounded shadow-2xl">
-        <p class="text-white">{{ $message }}</p>
-        <ul class="grid grid-cols-2 justify-between">
+<div class="flex content-center fixed top-0 left-0 w-full h-full bg-gray-500/[.9] hidden z-10" id="prompt">
+    <div class="p-5 mx-auto bg-gray-600 text-center w-fit rounded shadow-2xl">
+        <p class="m-2 text-white">{{ $message }}</p>
+        <ul class="m-2 grid grid-cols-2 justify-between">
             <li>
                 <form action="{{ $route }}" method="POST">
                     @csrf
