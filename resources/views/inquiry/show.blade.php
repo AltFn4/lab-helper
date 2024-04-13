@@ -1,10 +1,10 @@
 <x-app-layout>
     @isset($inquiry)
-    <div class="p-5 grid grid-cols-2 gap-5 text-white">
-        <h1 class="text-3xl col-span-2">Request</h1>
+    <div class="grid grid-cols-2 gap-5 p-5 text-white">
+        <h1 class="col-span-2 text-3xl">Request</h1>
         <div class="flex flex-col gap-2">
             <h2 class="text-xl">Code</h2>
-            <div class="border-2 border-gray-500 rounded">
+            <div class="rounded border-2 border-gray-500">
                 <textarea name="code" id="codeTextarea">{{ $inquiry->code }}</textarea>
             </div>
         </div>
@@ -26,7 +26,7 @@
                 @csrf
                 @method("PATCH")
                 <input type="hidden" name="inquiry_id" value="{{ $inquiry->id }}">
-                <x-primary-button>Assign</x-primary-butto>
+                <x-primary-button>Assign</x-primary-button>
             </form>
             @elseif($inquiry->student->id == Auth::user()->id || $inquiry->assistant->id == Auth::user()->id)
             @if(Auth::user()->hasRole('assistant'))
