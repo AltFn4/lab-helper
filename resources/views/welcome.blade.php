@@ -17,24 +17,23 @@
 </head>
 
 <body class="antialiased bg-gradient-to-r from-sky-500 to-indigo-500">
-    <div class="relative overflow-x-hidden">
+    <div class="overflow-x-hidden relative">
         <div class="top-0 z-10 w-screen">
             <div class="grid grid-cols-2 justify-between">
-                <h2 class="p-5 text-gray-300 text-xl">
+                <h2 class="p-5 text-xl text-gray-300">
                     LabLink
                 </h2>
                 <div class="p-5 text-right">
-                    <a href="{{ route('login') }}" class="p-5 text-gray-300 hover:animate-fade rounded">Login</a>
+                    <a href="{{route('login')}}" class="p-5 text-gray-300 rounded hover:animate-fade">Login</a>
                 </div>
             </div>
             <hr>
         </div>
         <a id="top"></a>
-        <article class="snap-y snap-mandatory overflow-hidden">
-            <section class="snap-center snap-always h-128 box-border relative">
-                <div class="bg-uni bg-no-repeat bg-cover bg-center blur h-128"></div>
-                <div
-                    class="absolute w-full z-10 flex flex-col gap-5 justify-center top-1/2 left-0 right-0 ml-auto mr-auto">
+        <article class="overflow-hidden snap-y snap-mandatory">
+            <section class="box-border relative snap-center snap-always h-128">
+                <div class="bg-center bg-no-repeat bg-cover blur bg-uni h-128"></div>
+                <div class="flex absolute right-0 left-0 top-1/2 z-10 flex-col gap-5 justify-center mr-auto ml-auto w-full">
                     <p class="text-center">
                         <a class="text-3xl">
                             Connect with your lab with
@@ -42,28 +41,31 @@
                         <br>
                         <a class="text-3xl text-gray-300">
                             LabLink
-                            <a>
-                                <br>
-                                your trusted partner in productivity!
-                            </a>
                         </a>
+                        <br>
+                        your trusted partner in productivity!
                     </p>
+                    <x-application-logo class="block w-auto h-20 text-gray-800 fill-current" />
                 </div>
 
             </section>
-            <section class="snap-center snap-always h-128 box-border relative">
-                <div class="bg-happy_helper bg-no-repeat bg-cover bg-center blur h-128"></div>
-                <p class="absolute w-full z-10 gap-5 justify-center top-1/2 left-0 right-0 ml-auto mr-auto text-center">
+            <section class="box-border relative snap-center snap-always h-128">
+                <div class="bg-center bg-no-repeat bg-cover blur bg-happy_helper h-128"></div>
+                <div class="flex absolute right-0 left-0 top-1/2 z-10 flex-col gap-5 justify-center mr-auto ml-auto w-full text-center">
                     <a class="text-3xl text-gray-300">
                         Fast Response Time
                     </a>
-                    <br>
-                    Sign off or Ask question with fast response time!
-                </p>
+                    <p>
+                        Sign off or Ask question with fast response time!
+                    </p>
+                    <x-clock-logo class="block w-auto h-20 text-gray-800 fill-current" />
+                </div>
+
+
             </section>
-            <section class="snap-center snap-always h-128 box-border relative">
-                <div class="bg-happy_student bg-no-repeat bg-cover bg-center blur h-128"></div>
-                <p class="absolute w-full z-10 justify-center top-1/2 left-0 right-0 ml-auto mr-auto text-center">
+            <section class="box-border relative snap-center snap-always h-128">
+                <div class="bg-center bg-no-repeat bg-cover blur bg-happy_student h-128"></div>
+                <p class="absolute right-0 left-0 top-1/2 z-10 justify-center mr-auto ml-auto w-full text-center">
                     <a class="text-3xl text-gray-300">
                         Enhanced lab experience
                     </a>
