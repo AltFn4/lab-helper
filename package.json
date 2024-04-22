@@ -19,7 +19,8 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
-        "codemirror": "^6.0.1",
+        "@codemirror/lang-javascript": "^6.2.2",
+        "codemirror": "^5.65.16",
         "watch": "^1.0.2"
     }
 }
