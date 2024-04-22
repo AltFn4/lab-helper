@@ -1,6 +1,6 @@
 <section class="grid grid-cols-3 auto-rows-auto gap-5">
-    <div class="p-4 flex flex-col gap-3 bg-gray-500 rounded col-span-2">
-        <p class="text-gray-100 text-lg">
+    <div class="flex flex-col col-span-2 gap-3 p-4 bg-gray-500 rounded">
+        <p class="text-lg text-gray-100">
             Status
         </p>
 
@@ -28,9 +28,9 @@
         @endif
     </div>
     @if(Auth::user()->seat != NULL)
-    <div class="p-4 flex flex-col gap-3 bg-gray-500 rounded ">
+    <div class="flex flex-col gap-3 p-4 bg-gray-500 rounded">
         @if(Auth::user()->inquiry == NULL)
-        <p class="text-gray-100 text-lg">
+        <p class="text-lg text-gray-100">
             Get help
         </p>
         <form action="{{ route('inquiry.edit') }}" method="GET">
@@ -41,9 +41,10 @@
             </x-primary-button>
         </form>
         @else
-        <p class="text-gray-100 text-lg">
+        <p class="text-lg text-gray-100">
             Your request
         </p>
+        @include('layouts.partials.status')
         <p>Time elapsed: {{ Auth::user()->inquiry->created_at->diffInMinutes(Carbon\Carbon::now()) }} mins</p>
         <form action="{{ route('inquiry.show') }}" method="GET">
             @csrf
@@ -56,20 +57,20 @@
         @endif
     </div>
     @endif
-    <div class="p-4 flex flex-col gap-3 bg-gray-500 rounded col-span-2">
-        <p class="text-gray-100 text-lg">
+    <div class="flex flex-col col-span-2 gap-3 p-4 bg-gray-500 rounded">
+        <p class="text-lg text-gray-100">
             Sign-off Log
         </p>
-        <div class="grid grid-col-1 gap-3">
+        <div class="grid gap-3 grid-col-1">
             @if(Auth::user()->signoffs->count() == 0)
-            <p class="text-gray-800 text-center">No sign-off record.</p>
+            <p class="text-center text-gray-800">No sign-off record.</p>
             @endif
             @foreach(Auth::user()->signoffs as $signoff)
             <div class="grid grid-cols-2">
                 <p>
                     > {{ $signoff->lab->module->name }}
                 </p>
-                <a class="text-gray-800 text-sm text-right">[{{ $signoff->created_at }}]</a>
+                <a class="text-sm text-right text-gray-800">[{{ $signoff->created_at }}]</a>
             </div>
             @endforeach
         </div>
