@@ -46,6 +46,7 @@ Route::get('/request', function (Request $request) {
 })->middleware(['auth', 'verified'])->name('request.edit');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/status', [InquiryController::class, 'status'])->name('inquiry.status');
     Route::get('/inquiries', [InquiryController::class, 'index'])->name('inquiry.index');
     Route::get('/inquiry', [InquiryController::class, 'edit'])->name('inquiry.edit');
     Route::post('/inquiry', [InquiryController::class, 'create'])->name('inquiry.create');

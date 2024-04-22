@@ -7,6 +7,8 @@ use App\Models\Inquiry;
 use App\Events\InquiryUpdated;
 use Illuminate\Support\Facades\Redirect;
 
+use function Laravel\Prompts\error;
+
 class InquiryController extends Controller
 {
     /**
@@ -152,11 +154,45 @@ class InquiryController extends Controller
 
         if ($inquiry && $inquiry->assistant_id == NULL && $user->hasRole('assistant'))
         {
-            $inquiry->assistant_id = $user->id;
-            $inquiry->update();
-            event(new InquiryUpdated($inquiry, $user->id));
+            $inquiry->update(['assistant_id' => $user->id]);
         }
 
         return redirect()->route('inquiry.show', ['inquiry_id' => $inquiry->id]);
+    }
+
+    /**
+     * Retrieves the current and maximum position of the inquiry or the assignee of the inquiry.
+     */
+    public function status(Request $request) {
+        $user = $request->user();
+        $lab = $user->lab;
+        $inquiry = $user->inquiry;
+
+        if (!$lab || !$inquiry)
+        {
+            return http_response_code(200);
+        }
+
+        if ($inquiry->assistant_id != NULL)
+        {
+            return response(array(
+                'assignee' => $inquiry->assistant->name,
+            ), 201);
+        }
+
+        $lab_id = $lab->id;
+
+        $inqs = Inquiry::all()->filter(function (Inquiry $in) use ($lab_id)
+        {
+            return $in->lab_id == $lab_id && $in->assistant_id == null;
+        })->sortBy('created_at');
+
+        $current = $inqs->search($inquiry) + 1;
+        $max = $inqs->count();
+
+        return response(array(
+            'current' => $current,
+            'max' => $max,
+        ), 202);
     }
 }

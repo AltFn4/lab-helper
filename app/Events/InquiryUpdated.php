@@ -15,36 +15,39 @@ class InquiryUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $inquiry;
+    public $code;
+    public $id;
     public $author_id;
-    public $current_pos;
-    public $max_pos;
+    public $status;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(Inquiry $inquiry, $author_id)
+    public function __construct(Inquiry $inquiry, $author_id=-1)
     {
-        $this->inquiry = $inquiry;
+        $this->id = $inquiry->id;
+        $this->code = $inquiry->code;
         $this->author_id = $author_id;
 
-        $inq_id = $inquiry->id;
-        $lab_id = $inquiry->lab->id;
-        $inqs = Inquiry::all()->filter(function (Inquiry $in) use ($lab_id)
+        if ($inquiry->assistant_id != NULL)
         {
-            return $in->lab_id == $lab_id && $in->assistant_id == null;
-        })->sortBy('created_at');
+            $this->status = 'Assignee: ' . $inquiry->assistant->name;
+        } else {
+            $lab_id = $inquiry->lab->id;
+            $inqs = Inquiry::all()->filter(function (Inquiry $in) use ($lab_id)
+            {
+                return $in->lab_id == $lab_id && $in->assistant_id == null;
+            })->sortBy('created_at');
 
-        $this->current_pos = $inqs->search(function (Inquiry $in) use ($inq_id)
-        {
-            return $in->id == $inq_id;
-        });
-        $this->max_pos = $inqs->count();
+            $current = $inqs->search($inquiry) + 1;
+            $max = $inqs->count();
+            $this->status = 'Position: ' . $current . '/' . $max;
+        }
     }
 
     public function broadcastOn()
     {
-        return ['inquiry-' . $this->inquiry->id];
+        return ['inquiry-' . $this->id];
     }
 
     public function broadcastAs()
