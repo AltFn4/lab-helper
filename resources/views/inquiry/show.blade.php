@@ -2,12 +2,9 @@
     @isset($inquiry)
     <div class="grid grid-cols-2 gap-5 p-5 text-white">
         <h1 class="col-span-2 text-3xl">Request</h1>
-        <div class="flex flex-col gap-2">
-            <h2 class="text-xl">Code</h2>
-            <div class="rounded border-2 border-gray-500">
-                <textarea name="code" id="codeTextarea">{{ $inquiry->code }}</textarea>
-            </div>
-        </div>
+
+        @include('inquiry.partials.editor', ['code' => $inquiry->code])
+
         <div class="flex flex-col gap-2">
             <h2 class="text-xl">Details</h2>
             @if($inquiry->assistant == NULL)
@@ -57,6 +54,7 @@
         var user_id = "{{ Auth::user()->id }}";
         var student_id = null;
         var assistant_id = null;
+        var code = "";
 
         if ("{{ isset($inquiry) }}") {
             id = "{{ $inquiry->id }}";
@@ -72,17 +70,29 @@
                     cluster: "{{ env('PUSHER_APP_CLUSTER') }}"
                 });
 
-                var codeTextarea = document.getElementById('codeTextarea');
+                var codeTextarea = $('#codeTextarea')[0];
                 var editor = CodeMirror.fromTextArea(codeTextarea, {
                     lineNumbers: true,
                     mode: 'javascript',
                     theme: 'yonce',
                     styleActiveLine: true,
                     matchBrackets: true,
-                    readOnly: !canEdit,
+                    indentWithTabs: true,
+                    indentUnit: 4,
+                    autoCloseTags: true,
+                    autoCloseBrackets: true,
                 });
 
+                var languageMode = $('#languageMode');
+                languageMode.change(function() {
+                    editor.setOption('mode', languageMode.val());
+                });
+
+
+                var isUpdate = false;
+
                 editor.on('change', function() {
+                    if (isUpdate) return;
                     setTimeout(() => {
                         $.ajax({
                             headers: {
@@ -113,6 +123,7 @@
 
                     if (editor.getValue() != code && user_id != author_id) {
                         setTimeout(() => {
+                            isUpdate = true;
                             var cursor = editor.getCursor();
                             editor.getDoc().setValue(code);
                             editor.setCursor(cursor);
