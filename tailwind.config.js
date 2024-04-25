@@ -38,4 +38,8 @@ export default {
     },
 
     plugins: [forms],
+
+    variants: {
+        display: ["group-hover"],
+    },
 };

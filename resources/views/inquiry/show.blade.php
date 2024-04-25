@@ -7,9 +7,13 @@
 
         <div class="flex flex-col gap-2">
             <h2 class="text-xl">Details</h2>
+            @if(Auth::user()->hasRole('student'))
             @include('layouts.partials.status')
+            @elseif(Auth::user()->hasRole('assistant'))
+            @include('layouts.partials.info', ['student' => $inquiry->student])
+            @endif
             <p>Type: {{ $inquiry->type }}</p>
-            <p>Description: {{ $inquiry->desc }}</p>
+            <p>Description: {{ $inquiry->desc ?? "(Not provided)" }}</p>
             @if($inquiry->link != NULL)
             <label for="link">Link:</label>
             <a name="link" class="text-cyan-300" href="{{ $inquiry->link }}" target="_blank">
@@ -79,6 +83,7 @@
                     indentUnit: 4,
                     autoCloseTags: true,
                     autoCloseBrackets: true,
+                    readOnly: !canEdit,
                 });
 
                 var languageMode = $('#languageMode');
@@ -113,11 +118,21 @@
                 channel.bind('notify', function(data) {
                     var author_id = data.author_id;
                     var code = data.code;
-                    var status = data.status;
+                    var current = data.current;
+                    var max = data.max;
+                    var assignee = data.assignee == null ? 'N/A' : data.assignee;
+                    var status = data.assignee == null ? 'In Queue': 'Reviewing';
 
                     if (author_id == -1) { // System event.
-                        console.log('system');
                         $('#status').text(status);
+                        $('#assignee').text(assignee);
+
+                        if (current == null && max == null) { // Updated assignee.
+                            $('#position').text('-/-');
+                        } else { // Updated queue position.
+                            $('#position').text(`${current}/${max}`);
+                            $('#position').css('width', `${100 * current / max}%`);
+                        }
                     }else if (editor.getValue() != code && user_id != author_id) { // Update code.
                         console.log(author_id);
                         setTimeout(() => {

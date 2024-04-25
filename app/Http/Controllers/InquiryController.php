@@ -105,7 +105,7 @@ class InquiryController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'code' => 'required',
+            'code' => 'present',
             'inquiry_id' => 'required',
         ]);
 

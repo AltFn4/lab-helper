@@ -1,14 +1,14 @@
 <x-app-layout>
     @include('labs.partials.stage', ['stage' => 'seat'])
-    <div class="p-5 flex flex-col items-center">
-        <h1 class="text-white text-5xl">Select Seat</h1>
+    <div class="flex flex-col items-center p-5">
+        <h1 class="text-5xl text-white">Select Seat</h1>
         <p class="text-gray-100">Select the seat you are located in.</p>
-        <p class="text-gray-100 text-sm">*Green = selecting; Red = unavailable; Gray = available.</p>
+        <p class="text-sm text-gray-100">*Green = selecting; Red = unavailable; Gray = available.</p>
         <form action="{{route('select.seat')}}" method="post">
             @csrf
             @method("PATCH")
             <input type="hidden" name="seat_id" id="seat_id" required>
-            <div class="p-5 m-5 flex flex-col justify-center gap-5 bg-gray-100 rounded">
+            <div class="flex flex-col gap-5 justify-center p-5 m-5 bg-gray-100 rounded">
                 <div class="grid grid-rows-4 grid-flow-col gap-5">
                     @foreach($lab->room->seats as $seat)
                     @if($seat->user_id == NULL)
