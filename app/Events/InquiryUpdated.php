@@ -18,7 +18,9 @@ class InquiryUpdated implements ShouldBroadcast
     public $code;
     public $id;
     public $author_id;
-    public $status;
+    public $assignee;
+    public $current;
+    public $max;
 
     /**
      * Create a new event instance.
@@ -31,7 +33,7 @@ class InquiryUpdated implements ShouldBroadcast
 
         if ($inquiry->assistant_id != NULL)
         {
-            $this->status = 'Assignee: ' . $inquiry->assistant->name;
+            $this->assignee = $inquiry->assistant->name;
         } else {
             $lab_id = $inquiry->lab->id;
             $inqs = Inquiry::all()->filter(function (Inquiry $in) use ($lab_id)
@@ -39,9 +41,8 @@ class InquiryUpdated implements ShouldBroadcast
                 return $in->lab_id == $lab_id && $in->assistant_id == null;
             })->sortBy('created_at');
 
-            $current = $inqs->search($inquiry) + 1;
-            $max = $inqs->count();
-            $this->status = 'Position: ' . $current . '/' . $max;
+            $this->current = $inqs->search($inquiry) + 1;
+            $this->max = $inqs->count();
         }
     }
 

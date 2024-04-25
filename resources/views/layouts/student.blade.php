@@ -5,15 +5,41 @@
         </p>
 
         @if(Auth::user()->seat)
-        <p>Lab: {{ Auth::user()->lab->room->name }}</p>
-        <p>Module: {{ Auth::user()->lab->module->name }}</p>
-        <p>Seat: {{ Auth::user()->seat->id }}</p>
+        <div class="p-2 flex flex-row gap-2">
+            <div class="flex flex-col gap-2">
+                <p class="p-2 text-center text-white bg-gradient-to-b from-sky-500 to-sky-600 rounded-md">Module</p>
+                <p class="p-2 text-center text-white bg-gradient-to-b from-sky-600 to-sky-700 rounded-md">Room</p>
+                <p class="p-2 text-center text-white bg-gradient-to-b from-sky-700 to-sky-800 rounded-md">Seat</p>
+                <p class="p-2 text-center text-white bg-gradient-to-b from-sky-800 to-sky-900 rounded-md">Start time</p>
+                <p class="p-2 text-center text-white bg-gradient-to-b from-sky-900 to-sky-950 rounded-md">Duration</p>
+            </div>
+            <div class="flex flex-col gap-2">
+                <p class="p-2 text-gray-800">{{ Auth::user()->lab->module->name }}</p>
+                <p class="p-2 text-gray-800">{{ Auth::user()->lab->room->name }}</p>
+                <p class="p-2 text-gray-800">{{ Auth::user()->seat->id }}</p>
+                <p class="p-2 text-gray-800">{{ Auth::user()->lab->start_time }}</p>
+                <p class="p-2 text-gray-800">{{ Auth::user()->lab->duration }} hour(s)</p>
+            </div>
+        </div>
+        <div class="flex">
+            <div id="seat-plan" class="p-2 bg-gray-500 border-2 border-gray-700 rounded">
+                <span class="grid grid-rows-4 grid-flow-col gap-1 justify-between">
+                    @foreach(Auth::user()->lab->room->seats as $seat)
+                    @if($seat->id == Auth::user()->seat->id)
+                    <x-used-seat-logo width="20" height="20"></x-used-seat-logo>
+                    @else
+                    <x-empty-seat-logo width="20" height="20"></x-empty-seat-logo>
+                    @endif
+                    @endforeach
+                </span>
+            </div>
+        </div>
         <div>
             <x-danger-button id="activate-btn" type="button">
                 leave
             </x-danger-button>
         </div>
-        <x-confirm-prompt route="{{ route('seat.leave') }}" message="Are you sure you want to leave the lab?"/>
+        <x-confirm-prompt route="{{ route('seat.leave') }}" message="Are you sure you want to leave the lab?" />
         @else
         <p>
             Please select a lab and seat.
@@ -33,6 +59,7 @@
         <p class="text-lg text-gray-100">
             Get help
         </p>
+        <p class="text-sm text-gray-800">No active request.</p>
         <form action="{{ route('inquiry.edit') }}" method="GET">
             @csrf
             @method('GET')
@@ -45,7 +72,6 @@
             Your request
         </p>
         @include('layouts.partials.status')
-        <p>Time elapsed: {{ Auth::user()->inquiry->created_at->diffInMinutes(Carbon\Carbon::now()) }} mins</p>
         <form action="{{ route('inquiry.show') }}" method="GET">
             @csrf
             @method('GET')

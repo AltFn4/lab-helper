@@ -13,7 +13,7 @@ class InquiryObserver
         Inquiry::all()->filter(function (Inquiry $in) use ($lab_id) {
             return $in->lab_id == $lab_id;
         })->each(function ($inq) {
-            new InquiryUpdated($inq);
+            event(new InquiryUpdated($inq));
         });
     }
     /**
