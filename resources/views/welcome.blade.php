@@ -32,7 +32,6 @@
         <a id="top"></a>
         <article class="overflow-hidden snap-y snap-mandatory">
             <section class="box-border relative snap-center snap-always h-128">
-                <div class="bg-center bg-no-repeat bg-cover blur bg-uni h-128"></div>
                 <div class="flex absolute right-0 left-0 top-1/2 z-10 flex-col gap-5 justify-center mr-auto ml-auto w-full">
                     <p class="text-center">
                         <a class="text-3xl">
@@ -50,7 +49,6 @@
 
             </section>
             <section class="box-border relative snap-center snap-always h-128">
-                <div class="bg-center bg-no-repeat bg-cover blur bg-happy_helper h-128"></div>
                 <div class="flex absolute right-0 left-0 top-1/2 z-10 flex-col gap-5 justify-center mr-auto ml-auto w-full text-center">
                     <a class="text-3xl text-gray-300">
                         Fast Response Time
@@ -64,7 +62,6 @@
 
             </section>
             <section class="box-border relative snap-center snap-always h-128">
-                <div class="bg-center bg-no-repeat bg-cover blur bg-happy_student h-128"></div>
                 <p class="absolute right-0 left-0 top-1/2 z-10 justify-center mr-auto ml-auto w-full text-center">
                     <a class="text-3xl text-gray-300">
                         Enhanced lab experience

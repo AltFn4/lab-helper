@@ -35,11 +35,6 @@ export default {
             height: {
                 '128': '48rem',
             },
-            backgroundImage: {
-                'uni': "url('/storage/images/uni.jpg')",
-                'happy_student': "url('/storage/images/happy_student.jpg')",
-                'happy_helper': "url('/storage/images/happy_helper.jpg')",
-            },
         },
     },
 
