@@ -18,7 +18,7 @@ Version Control: GitHub
 Deployment: Microsoft Azure
 
 ## Installation
-Clone the repository: git clone https://github.com/your/repository.git
+Clone the repository: git clone [https://github.com/your/repository.git](https://github.com/AltFn4/lab-helper.git)
 Install dependencies: composer install
 Set up the database: php artisan migrate
 Configure environment variables: .env
