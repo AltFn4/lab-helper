@@ -14,7 +14,7 @@
         </div>
         <span id="position-bar">
             <div class="bg-gray-700 border-2 border-gray-700 rounded-full">
-                <div id="position" class="bg-green-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full">-/-</div>
+                <div id="position" class="transition-[max-width] ease-in-out delay-150 w-full bg-green-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full">-/-</div>
             </div>
         </span>
     </div>
@@ -40,7 +40,7 @@
 
                     $('#status').text("In Queue");
                     $('#position').text(`${current}/${max}`);
-                    $('#position').css('width', `${100 * current / max}%`);
+                    $('#position').css('max-width', `${100 * (max - current) / max}%`);
                 }
             },
             error: function(error) {

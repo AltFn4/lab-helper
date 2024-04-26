@@ -23,11 +23,11 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'email' => preg_replace('/@example\..*/', '@swansea.ac.uk', fake()->unique()->safeEmail()),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'lab_id' => null,
+            'lab_id' => random_int(1, Lab::count()),
         ];
     }
 

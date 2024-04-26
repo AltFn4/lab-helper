@@ -129,9 +129,10 @@
 
                         if (current == null && max == null) { // Updated assignee.
                             $('#position').text('-/-');
+                            $('#position').css('max-width', '100%');
                         } else { // Updated queue position.
                             $('#position').text(`${current}/${max}`);
-                            $('#position').css('width', `${100 * current / max}%`);
+                            $('#position').css('max-width', `${100 * (max - current) / max}%`);
                         }
                     }else if (editor.getValue() != code && user_id != author_id) { // Update code.
                         console.log(author_id);

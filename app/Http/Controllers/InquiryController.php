@@ -18,8 +18,7 @@ class InquiryController extends Controller
     {
         $lab_id = $request->user()->lab_id;
 
-        if ($lab_id == NULL)
-        {
+        if ($lab_id == NULL) {
             return redirect()->back();
         }
 
@@ -38,8 +37,7 @@ class InquiryController extends Controller
     {
         $inquiry = $request->user()->inquiry;
 
-        if ($inquiry != NULL)
-        {
+        if ($inquiry != NULL) {
             return Redirect::to('dashboard');
         }
 
@@ -55,8 +53,7 @@ class InquiryController extends Controller
             'inquiry_id' => 'required',
         ]);
         $inquiry = Inquiry::find($request->inquiry_id);
-        if ($inquiry)
-        {
+        if ($inquiry) {
             return view('inquiry.show', ['inquiry' => $inquiry]);
         }
 
@@ -74,14 +71,12 @@ class InquiryController extends Controller
         ]);
 
         // Cancel inquiry creation if there exists one for the same user.
-        if ($request->user()->inquiry != NULL)
-        {
+        if ($request->user()->inquiry != NULL) {
             return back()->withErrors('A request has already been created.');
         }
 
         // Reject inquiry creation if user has not chosen lab or seat.
-        if ($request->user()->seat == NULL)
-        {
+        if ($request->user()->seat == NULL) {
             return back()->withErrors('Lab or seat has not been chosen.');
         }
 
@@ -112,8 +107,7 @@ class InquiryController extends Controller
         $inq = Inquiry::find($request->inquiry_id);
         $code = $request->code;
 
-        if ($inq)
-        {
+        if ($inq) {
             $inq->code = $code;
             $inq->update();
             $user_id = $request->user()->id;
@@ -152,8 +146,7 @@ class InquiryController extends Controller
         $inquiry = Inquiry::find($request->inquiry_id);
         $user = $request->user();
 
-        if ($inquiry && $inquiry->assistant_id == NULL && $user->hasRole('assistant'))
-        {
+        if ($inquiry && $inquiry->assistant_id == NULL && $user->hasRole('assistant')) {
             $inquiry->update(['assistant_id' => $user->id]);
         }
 
@@ -163,18 +156,17 @@ class InquiryController extends Controller
     /**
      * Retrieves the current and maximum position of the inquiry or the assignee of the inquiry.
      */
-    public function status(Request $request) {
+    public function status(Request $request)
+    {
         $user = $request->user();
         $lab = $user->lab;
         $inquiry = $user->inquiry;
 
-        if (!$lab || !$inquiry)
-        {
+        if (!$lab || !$inquiry) {
             return http_response_code(200);
         }
 
-        if ($inquiry->assistant_id != NULL)
-        {
+        if ($inquiry->assistant_id != NULL) {
             return response(array(
                 'assignee' => $inquiry->assistant->name,
             ), 201);
@@ -182,13 +174,20 @@ class InquiryController extends Controller
 
         $lab_id = $lab->id;
 
-        $inqs = Inquiry::all()->filter(function (Inquiry $in) use ($lab_id)
-        {
+        $ids = Inquiry::all()->filter(function (Inquiry $in) use ($lab_id) {
             return $in->lab_id == $lab_id && $in->assistant_id == null;
-        })->sortBy('created_at');
+        })->sortBy('created_at')->map(function($in) {
+            return $in->id;
+        });
 
-        $current = $inqs->search($inquiry) + 1;
-        $max = $inqs->count();
+        $current = 1;
+        foreach ($ids as $id) {
+            if ($id == $inquiry->id) {
+                break;
+            }
+            $current++;
+        }
+        $max = $ids->count();
 
         return response(array(
             'current' => $current,

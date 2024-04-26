@@ -36,13 +36,20 @@ class InquiryUpdated implements ShouldBroadcast
             $this->assignee = $inquiry->assistant->name;
         } else {
             $lab_id = $inquiry->lab->id;
-            $inqs = Inquiry::all()->filter(function (Inquiry $in) use ($lab_id)
-            {
+            $ids = Inquiry::all()->filter(function (Inquiry $in) use ($lab_id) {
                 return $in->lab_id == $lab_id && $in->assistant_id == null;
-            })->sortBy('created_at');
+            })->sortBy('created_at')->map(function($in) {
+                return $in->id;
+            });
 
-            $this->current = $inqs->search($inquiry) + 1;
-            $this->max = $inqs->count();
+            $this->current = 1;
+            foreach ($ids as $id) {
+                if ($id == $inquiry->id) {
+                    break;
+                }
+                $this->current++;
+            }
+            $this->max = $ids->count();
         }
     }
 
