@@ -1,5 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
+import plugin from 'tailwindcss/plugin';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -19,12 +20,17 @@ export default {
             },
             animation: {
                 fade: 'fadeIn .5s ease-in forwards',
+                select: 'select .1s ease-in forwards',
             },
-            keyframes:  theme => ({
+            keyframes: theme => ({
                 'fadeIn': {
                     '0%': { backgroundColor: theme('colors.transparent') },
-                    '100%': { backgroundColor: theme('colors.black')},
+                    '100%': { backgroundColor: theme('colors.black') },
                 },
+                'select': {
+                    '0%': { transform: 'scale(1)' },
+                    '100%': { transform: 'scale(.95)' },
+                }
             }),
             height: {
                 '128': '48rem',
@@ -37,9 +43,10 @@ export default {
         },
     },
 
-    plugins: [forms],
-
-    variants: {
-        display: ["group-hover"],
-    },
+    plugins: [
+        forms,
+        plugin(function ({ addVariant }) {
+            addVariant('selected', '&.selected');
+        })
+    ],
 };

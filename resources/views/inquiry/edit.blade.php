@@ -6,15 +6,15 @@
             <h1 class="col-span-2 text-3xl">Request</h1>
 
             @include('inquiry.partials.editor')
-            
+
             <div class="flex flex-col gap-2">
                 <h2 class="text-xl">Details</h2>
                 <div class="flex flex-col gap-2">
                     <label for="request-type">Type</label>
                     <select name="type" id="request-type" class="bg-gray-800 rounded" required>
                         <option value=""></option>
-                        <option value="signoff">Sign off</option>
-                        <option value="ask">Ask question</option>
+                        <option value="Sign off">Sign off</option>
+                        <option value="Ask question">Ask question</option>
                     </select>
                 </div>
                 <div class="flex flex-col gap-2">

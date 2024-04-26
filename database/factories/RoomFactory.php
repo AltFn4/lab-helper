@@ -17,7 +17,7 @@ class RoomFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => ['cofo', 'engineering central'][random_int(0, 1)] . " " . random_int(100, 300),
+            'name' => fake()->randomElement(['cofo', 'engineering central']) . " " . random_int(100, 300),
         ];
     }
 }
